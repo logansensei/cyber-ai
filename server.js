@@ -229,6 +229,13 @@ app.use(express.static('.', {
     setHeaders: (res, path) => {
         if (path.endsWith('.html')) {
             res.setHeader('Cache-Control', 'no-cache');
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        }
+        if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css; charset=utf-8');
+        }
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
         }
     }
 }));
