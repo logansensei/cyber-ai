@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  cybersentinel-ai:
+    build: .
+    container_name: cybersentinel-ai
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET:-default-jwt-secret-change-in-production}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-default-encryption-key-change-in-production}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - cybersentinel-network
+
+  # Optional: Redis for caching (uncomment if needed)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: cybersentinel-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - cybersentinel-network
+
+  # Optional: PostgreSQL for data persistence (uncomment if needed)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: cybersentinel-postgres
+  #   environment:
+  #     - POSTGRES_DB=cybersentinel
+  #     - POSTGRES_USER=cybersentinel
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-change-me}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - cybersentinel-network
+
+networks:
+  cybersentinel-network:
+    driver: bridge
+
+volumes:
+  # redis_data:
+  # postgres_data:

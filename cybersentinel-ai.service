@@ -1,0 +1,44 @@
+[Unit]
+Description=CyberSentinel AI - Professional API Security Testing Platform
+Documentation=https://github.com/your-username/cybersentinel-ai
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/cybersentinel-ai
+ExecStart=/usr/bin/node server.js
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cybersentinel-ai
+
+# Environment variables
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOST=0.0.0.0
+EnvironmentFile=/opt/cybersentinel-ai/.env
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/cybersentinel-ai
+ReadWritePaths=/tmp/uploads
+ReadWritePaths=/var/log/cybersentinel-ai
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Memory limits
+MemoryMax=2G
+MemoryHigh=1.5G
+
+[Install]
+WantedBy=multi-user.target

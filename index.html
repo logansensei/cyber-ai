@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel AI - Professional API Security Testing Platform</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="CyberSentinel AI">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberSentinel AI">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#00d4ff">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#00d4ff">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <div class="particles-bg"></div>
+    <div class="gradient-overlay"></div>
+    
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>CyberSentinel AI</span>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="status-indicator">
+                    <span id="statusText">Ready</span>
+                    <div class="status-dot" id="statusDot"></div>
+                </div>
+                <button class="btn btn-ghost" id="settingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="btn btn-ghost" id="helpBtn">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="hero-header">
+                        <button class="btn btn-secondary theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Professional API Security Testing</span>
+                        <br>Powered by AI
+                    </h1>
+                    <p class="hero-subtitle">
+                        Comprehensive vulnerability assessment with intelligent payload generation, 
+                        OWASP API Top 10 testing, and automated exploitation capabilities.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">OWASP Categories</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">Test Cases</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">AI</span>
+                            <span class="stat-label">Powered</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configuration Section -->
+            <section class="config-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-robot"></i> AI Configuration</h2>
+                    <p>Configure AI providers for intelligent security testing</p>
+                </div>
+                
+                <div class="config-grid">
+                    <div class="config-card">
+                        <div class="card-header">
+                            <h3>AI Provider</h3>
+                            <div class="card-badge">Required</div>
+                        </div>
+                        <div class="form-group">
+                            <select id="aiProvider" onchange="updateAIFields()" class="form-select">
+                                <option value="none">No AI (Simulation Mode)</option>
+                                <option value="openai">OpenAI GPT-4</option>
+                                <option value="gemini">Google Gemini</option>
+                                <option value="local">Local LLM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="config-card" id="apiKeyCard" style="display: none;">
+                        <div class="card-header">
+                            <h3>API Key</h3>
+                            <div class="card-badge">Secure</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fas fa-key"></i>
+                                <input type="password" id="aiApiKey" placeholder="Enter your API key" class="form-input">
+                                <button type="button" class="input-toggle" onclick="togglePassword('aiApiKey')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <div class="card-header">
+                            <h3>Connection Status</h3>
+                            <div class="card-badge" id="connectionBadge">Not Connected</div>
+                        </div>
+                        <div class="connection-status">
+                            <button class="btn btn-primary" id="testConnectionBtn" onclick="testAIConnection()">
+                                <i class="fas fa-plug"></i>
+                                Test Connection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Specification Section -->
+            <section class="spec-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-code"></i> API Specification</h2>
+                    <p>Upload your API specification to begin security testing</p>
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your API specification here</h3>
+                        <p>Supports OpenAPI 3.0, Swagger 2.0, Postman Collections, and HAR files</p>
+                        <div class="upload-formats">
+                            <span class="format-badge">JSON</span>
+                            <span class="format-badge">YAML</span>
+                            <span class="format-badge">HAR</span>
+                        </div>
+                        <input type="file" id="specFile" accept=".json,.yaml,.yml,.har" style="display: none;" onchange="handleFileUpload(event)">
+                        <button class="btn btn-outline" onclick="document.getElementById('specFile').click()">
+                            <i class="fas fa-folder-open"></i>
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+
+                <div class="spec-preview" id="specPreview" style="display: none;">
+                    <div class="preview-header">
+                        <h3>API Specification Preview</h3>
+                        <button class="btn btn-ghost" onclick="clearSpec()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="preview-content">
+                        <div class="endpoint-list" id="endpointList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testing Configuration Section -->
+            <section class="test-config-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> Testing Configuration</h2>
+                    <p>Configure your security testing parameters</p>
+                </div>
+                
+                <div class="test-config-grid">
+                    <div class="config-card">
+                        <div class="card-header">
+                            <h3>Authentication</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Auth Type</label>
+                            <select id="authType" class="form-select">
+                                <option value="none">No Authentication</option>
+                                <option value="bearer">Bearer Token</option>
+                                <option value="apikey">API Key</option>
+                                <option value="oauth2">OAuth 2.0</option>
+                                <option value="basic">Basic Auth</option>
+                                <option value="custom">Custom Headers</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="authConfig" style="display: none;">
+                            <label>Configuration</label>
+                            <textarea id="authConfigText" placeholder='{"Authorization": "Bearer your-token"}' class="form-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <div class="card-header">
+                            <h3>Test Selection</h3>
+                        </div>
+                        <div class="test-selection">
+                            <div class="test-category">
+                                <h4>OWASP API Top 10</h4>
+                                <div class="test-options" id="testOptions">
+                                    <!-- Test options will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <div class="card-header">
+                            <h3>Advanced Settings</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Max Concurrent Requests</label>
+                            <input type="number" id="maxConcurrent" value="3" min="1" max="10" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Request Delay (ms)</label>
+                            <input type="number" id="requestDelay" value="200" min="0" max="5000" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Timeout (ms)</label>
+                            <input type="number" id="timeout" value="30000" min="5000" max="120000" class="form-input">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan Control Section -->
+            <section class="scan-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-play-circle"></i> Security Scan</h2>
+                    <p>Execute comprehensive security testing on your API</p>
+                </div>
+                
+                <div class="scan-controls">
+                    <button class="btn btn-primary btn-large" id="startBtn" onclick="startScan()">
+                        <i class="fas fa-play"></i>
+                        Start Security Scan
+                    </button>
+                    <button class="btn btn-danger btn-large" id="stopBtn" onclick="stopScan()" style="display: none;">
+                        <i class="fas fa-stop"></i>
+                        Stop Scan
+                    </button>
+                </div>
+
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-header">
+                        <span>Scan Progress</span>
+                        <span id="progressText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-details">
+                        <span id="progressDetails">Initializing...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Scan Results</h2>
+                    <div class="header-actions">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="Search findings..." class="search-input">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <button class="btn btn-outline" onclick="exportResults()">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-outline" onclick="clearResults()">
+                            <i class="fas fa-trash"></i>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-summary">
+                    <div class="summary-card critical">
+                        <div class="summary-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <span class="summary-number" id="criticalCount">0</span>
+                            <span class="summary-label">Critical</span>
+                        </div>
+                    </div>
+                    <div class="summary-card high">
+                        <div class="summary-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <span class="summary-number" id="highCount">0</span>
+                            <span class="summary-label">High</span>
+                        </div>
+                    </div>
+                    <div class="summary-card medium">
+                        <div class="summary-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <span class="summary-number" id="mediumCount">0</span>
+                            <span class="summary-label">Medium</span>
+                        </div>
+                    </div>
+                    <div class="summary-card low">
+                        <div class="summary-icon">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div class="summary-content">
+                            <span class="summary-number" id="lowCount">0</span>
+                            <span class="summary-label">Low</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-tabs">
+                    <button class="tab-btn active" onclick="switchTab('findings')">
+                        <i class="fas fa-bug"></i>
+                        Findings
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('aiInsights')">
+                        <i class="fas fa-brain"></i>
+                        AI Insights
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('recommendations')">
+                        <i class="fas fa-lightbulb"></i>
+                        Recommendations
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('console')">
+                        <i class="fas fa-terminal"></i>
+                        Console
+                    </button>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-panel active" id="findingsPanel">
+                        <div class="findings-list" id="findingsList"></div>
+                    </div>
+                    <div class="tab-panel" id="aiInsightsPanel">
+                        <div class="ai-insights" id="aiInsights"></div>
+                    </div>
+                    <div class="tab-panel" id="recommendationsPanel">
+                        <div class="recommendations" id="recommendations"></div>
+                    </div>
+                    <div class="tab-panel" id="consolePanel">
+                        <div class="console" id="console">
+                            <div class="console-header">
+                                <span>Console Output</span>
+                                <button class="btn btn-ghost btn-sm" onclick="clearConsole()">
+                                    <i class="fas fa-trash"></i>
+                                    Clear
+                                </button>
+                            </div>
+                            <div class="console-content" id="consoleContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>CyberSentinel AI</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" onclick="showHelp()">Documentation</a>
+                    <a href="#" onclick="showAbout()">About</a>
+                    <a href="https://github.com/cybersentinel-ai" target="_blank">GitHub</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CyberSentinel AI. Professional API Security Testing Platform.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="modal-close" onclick="closeModal('settingsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Theme</label>
+                    <select class="form-select">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Language</label>
+                    <select class="form-select">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Help & Documentation</h3>
+                <button class="modal-close" onclick="closeModal('helpModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-content">
+                    <h4>Getting Started</h4>
+                    <p>1. Configure your AI provider and API key</p>
+                    <p>2. Upload your API specification</p>
+                    <p>3. Select the tests you want to run</p>
+                    <p>4. Start the security scan</p>
+                    <p>5. Review the results and recommendations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
