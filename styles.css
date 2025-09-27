@@ -5,6 +5,31 @@
     box-sizing: border-box;
 }
 
+/* Background elements */
+.matrix-bg, .particles-bg, .gradient-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.matrix-bg {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+.particles-bg {
+    background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+}
+
+.gradient-overlay {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 107, 107, 0.05) 100%);
+}
+
 :root {
     /* Color Palette */
     --primary: #00d4ff;
@@ -210,6 +235,33 @@ body {
     text-align: center;
     padding: var(--space-2xl) 0;
     margin-bottom: var(--space-2xl);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--space-lg);
 }
 
 .hero-title {
@@ -1148,7 +1200,8 @@ body {
     padding: var(--space-lg);
 }
 
-.section {
+/* Apply glass morphism to all sections */
+.section, .config-section, .spec-section, .test-config-section, .scan-section, .results-section {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1161,7 +1214,8 @@ body {
     overflow: hidden;
 }
 
-.section::before {
+.section::before, .config-section::before, .spec-section::before, 
+.test-config-section::before, .scan-section::before, .results-section::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1171,7 +1225,8 @@ body {
     background: linear-gradient(90deg, var(--primary), var(--secondary));
 }
 
-.section:hover {
+.section:hover, .config-section:hover, .spec-section:hover, 
+.test-config-section:hover, .scan-section:hover, .results-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 16px 48px rgba(0, 212, 255, 0.2);
     border-color: var(--primary);
@@ -1271,6 +1326,128 @@ body {
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: var(--primary);
+}
+
+/* Config cards styling */
+.config-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.config-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.test-config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+/* Upload area styling */
+.upload-area {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: var(--space-2xl);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+}
+
+/* Hero section improvements */
+.hero {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+}
+
+/* Results section improvements */
+.results-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.summary-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Tab styling improvements */
+.results-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
 }
 
 /* ===== CONSOLE ===== */
